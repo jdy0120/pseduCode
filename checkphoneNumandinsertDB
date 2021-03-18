@@ -1,24 +1,31 @@
-import mysql from 'msyql2'
 
-mysql.connection ()
+const numArray = 1만개의 false를 가진 배열 생성
 
-const recvPhoneNum = ['01000000000','01012341234','01094899904']
+const recvPhoneNum = ['01000000000','01012341234','01094899904'] // 누군가 입력한 휴대전화번호
 
-recvPhoneNum.forEach(element => {
-  const result = mysql.query(`select * from table where phonenumber = element`)
+const assignPhoneNum = [] // 데이터베이스에 저장되지 않은 휴대전화번호
+const returnPhoneNum = [] // 데이터베이스에 저장되어 리턴할 휴대전화번호
 
-  if (result가 null이라면) {
-    for ( 10000 번 반복 ) {
-      const ranNum = 4자리 랜덤숫자
-
-      cont canInsert = mysql.query(`select * from table where 03num = ranNum`)
-      
-      if (canInsert가 null이라면) {
-
-        insert into table(03num,phonenum) values(ranNum,element)
-        break;
-      }
+connect.execute('select * from table', (result) => {
+  result.forEach(element) => {
+    if (recvPhoneNum.indexOf(element.phonenum) >= 0) {
+      returnPhoneNum.push(element.phonenum)
+    } else {
+      numArray[parstInt(element.num03)] = true
+      assignPhoneNum.push(element.phonenum)
     }
   }
-
 })
+
+// true를 가진 numArray의 index를 가진 배열 생성 (canAssign은 할당가능한 4자리수 번호를 담은 배열이 된다.)
+const canAssign = numArray.filter((element,index) => { if(element == true) return index })
+
+assignPhoneNum.forEach(element => {
+
+  const ranNum = math.random()*(lengthof(canAssign)) // 0에서 canAssign배열의 길이 중 랜덤으로 숫자를 뽑는다.
+
+  connect.execute('insert into table(num03,phonenum) values (canAssign[ranNum],element)')
+
+  canAssign.splice(ranNum)
+
+});
