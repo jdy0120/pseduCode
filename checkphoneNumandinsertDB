@@ -1,0 +1,24 @@
+import mysql from 'msyql2'
+
+mysql.connection ()
+
+const recvPhoneNum = ['01000000000','01012341234','01094899904']
+
+recvPhoneNum.forEach(element => {
+  const result = mysql.query(`select * from table where phonenumber = element`)
+
+  if (result가 null이라면) {
+    for ( 10000 번 반복 ) {
+      const ranNum = 4자리 랜덤숫자
+
+      cont canInsert = mysql.query(`select * from table where 03num = ranNum`)
+      
+      if (canInsert가 null이라면) {
+
+        insert into table(03num,phonenum) values(ranNum,element)
+        break;
+      }
+    }
+  }
+
+})
