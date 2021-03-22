@@ -34,12 +34,12 @@ hospitalNum.forEach(element => {
       // 할당가능한 번호를 하나씩 pop한다.
       const assignIndex = suffledCanAssign.pop()
       // 안전번호를 SafeNumber 테이블에 입력한다.
-      const insertSafeNumberSQL = `insert into SafeNumber(num01,num02,num03,phonenum) values ('0508','3184','${assignIndex}','${element}')`
+      const insertSafeNumberSQL = `insert into SafeNumber(nu01,num02,num03,phonenum) values ('0508','3184','${assignIndex}','${element}')`
       // Hospitals테이블에 있는 safenum을 업데이트한다.
       const updateHospitalSafeNumberSQL = `update Hospitals set safenum = 0508-3184-${num03} where tel = element`
 
-      numArray[assignIndex] = true
-      HospitalNum.push(element)
+      numArray[assignIndex] = true // 할당된 인덱스를 표시한다.
+      HospitalNum.push(element) // 병원의 전화번호를 저장한다.
     } catch (err) {
       console.log('만개의 번호가 모두 할당되었습니다.')
     }
