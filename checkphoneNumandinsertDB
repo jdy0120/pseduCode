@@ -1,35 +1,31 @@
-서버를 킬 때 초기 값 설정
+초기 값 설정
 const numArray = 1만개의 false를 가진 배열 생성
 
-const safeNum = // SafeNum테이블에 저장된 모든 0508번호 중 뒷 네자리 번호(num03)를 배열로 저장
+const safeNum = // DB안의 SafeNum테이블에 저장된 모든 뒷 네자리 번호(num03)를 배열로 저장
 
 safeNum.map((element) => {
   numArray[element] = true // 1만개의 번호 중 사용중인 번호를 index로 하여 numArray[index]를 true로 저장
 })
 
-const canAssign = numArray.map((element,index) => { // 할당되지 않은 번호만 모인 배열을 생성
+const canAssign = numArray.filter((element,index) => { // 할당되지 않은 번호만 모인 배열을 생성
   if (element) return index
 })
 
-const shuffleArray = array => { // 배열을 무작위로 섞는 함수
-  for (let i = 0; i < array.length; i++) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+const shuffleArray = array => { // 배열을 무작위로 섞는 함수 (인터넷에서 가져옴)
+  inputArray.sort(()=> Math.random() - 0.5);
 };
 
 const suffledCanAssign = shuffleArray(canAssign); // 무작위로 섞인 할당가능한 index를 담은 배열
 
-const HospitalNum = // Hospitals테이블에 있는 번호 중 safenum이 존재하는 병원의 tel 저장
------------------------------------------------------------------------------------------------
+const haveSaveNumberHospital = // Hospitals테이블에 있는 번호 중 safenum이 존재하는 병원의 tel 저장
+-------------------------------------------------------------------------------------------------------
 
 초기 값 설정이 끝난 후
 
 const hospitalNum = // HospitalNum 입력 (배열)
 
 hospitalNum.forEach(element => {
-  if (!hospitalNum.includes(element)){
+  if (!haveSaveNumberHospital.includes(element)){
     try {
       // 할당가능한 번호를 하나씩 pop한다.
       const assignIndex = suffledCanAssign.pop()
@@ -39,7 +35,7 @@ hospitalNum.forEach(element => {
       const updateHospitalSafeNumberSQL = `update Hospitals set safenum = 0508-3184-${num03} where tel = element`
 
       numArray[assignIndex] = true // 할당된 인덱스를 표시한다.
-      HospitalNum.push(element) // 병원의 전화번호를 저장한다.
+      haveSaveNumberHospital.push(element) // 병원의 전화번호를 저장한다.
     } catch (err) {
       console.log('만개의 번호가 모두 할당되었습니다.')
     }
