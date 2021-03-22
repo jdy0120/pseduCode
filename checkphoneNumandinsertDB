@@ -11,7 +11,7 @@ const canAssign = numArray.filter((element,index) => { // 할당되지 않은 �
   if (element) return index
 })
 
-const shuffleArray = array => { // 배열을 무작위로 섞는 함수 (인터넷에서 가져옴)
+const shuffleArray = inputArray => { // 배열을 무작위로 섞는 함수 (인터넷에서 가져옴)
   inputArray.sort(()=> Math.random() - 0.5);
 };
 
@@ -22,7 +22,7 @@ const haveSaveNumberHospital = // Hospitals테이블에 있는 번호 중 safenu
 
 초기 값 설정이 끝난 후
 
-const hospitalNum = // HospitalNum 입력 (배열)
+const hospitalNum = // 안심번호를 할당하고자 하는 병원 번호 입력 (배열)
 
 hospitalNum.forEach(element => {
   if (!haveSaveNumberHospital.includes(element)){
