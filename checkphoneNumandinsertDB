@@ -1,31 +1,47 @@
-
+서버를 킬 때 초기 값 설정
 const numArray = 1만개의 false를 가진 배열 생성
 
-const recvPhoneNum = ['01000000000','01012341234','01094899904'] // 누군가 입력한 휴대전화번호
+const safeNum = // SafeNum테이블에 저장된 모든 0508번호 중 뒷 네자리 번호(num03)를 배열로 저장
 
-const assignPhoneNum = [] // 데이터베이스에 저장되지 않은 휴대전화번호
-const returnPhoneNum = [] // 데이터베이스에 저장되어 리턴할 휴대전화번호
-
-connect.execute('select * from table', (result) => {
-  result.forEach(element) => {
-    if (recvPhoneNum.indexOf(element.phonenum) >= 0) {
-      returnPhoneNum.push(element.phonenum)
-    } else {
-      numArray[parstInt(element.num03)] = true
-      assignPhoneNum.push(element.phonenum)
-    }
-  }
+safeNum.map((element) => {
+  numArray[element] = true // 1만개의 번호 중 사용중인 번호를 index로 하여 numArray[index]를 true로 저장
 })
 
-// true를 가진 numArray의 index를 가진 배열 생성 (canAssign은 할당가능한 4자리수 번호를 담은 배열이 된다.)
-const canAssign = numArray.filter((element,index) => { if(element == true) return index })
+const canAssign = numArray.map((element,index) => { // 할당되지 않은 번호만 모인 배열을 생성
+  if (element) return index
+})
 
-assignPhoneNum.forEach(element => {
+const shuffleArray = array => { // 배열을 무작위로 섞는 함수
+  for (let i = 0; i < array.length; i++) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
 
-  const ranNum = math.random()*(lengthof(canAssign)) // 0에서 canAssign배열의 길이 중 랜덤으로 숫자를 뽑는다.
+const suffledCanAssign = shuffleArray(canAssign); // 무작위로 섞인 할당가능한 index를 담은 배열
 
-  connect.execute('insert into table(num03,phonenum) values (canAssign[ranNum],element)')
+const HospitalNum = // Hospitals테이블에 있는 번호 중 safenum이 존재하는 병원의 tel 저장
+-----------------------------------------------------------------------------------
+초기 값 설정이 끝난 후
 
-  canAssign.splice(ranNum)
+const hospitalNum = // HospitalNum 입력 (배열)
 
+hospitalNum.forEach(element => {
+  if (!hospitalNum.includes(element)){
+    try {
+      // 할당가능한 번호를 하나씩 pop한다.
+      const assignIndex = suffledCanAssign.pop()
+      // 안전번호를 SafeNumber 테이블에 입력한다.
+      const insertSafeNumberSQL = `insert into SafeNumber(num01,num02,num03,phonenum) values ('0508','3184','${assignIndex}','${element}')`
+      // Hospitals테이블에 있는 safenum을 업데이트한다.
+      const updateHospitalSafeNumberSQL = `update Hospitals set safenum = 0508-3184-${num03} where tel = element`
+
+      numArray[assignIndex] = true
+    } catch (err) {
+      console.log('만개의 번호가 모두 할당되었습니다.')
+    }
+  } else {
+    console.log(`${element}는 안심번호가 존재하는 병원전화번호 입니다.`)
+  }
 });
