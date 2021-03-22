@@ -22,7 +22,8 @@ const shuffleArray = array => { // 배열을 무작위로 섞는 함수
 const suffledCanAssign = shuffleArray(canAssign); // 무작위로 섞인 할당가능한 index를 담은 배열
 
 const HospitalNum = // Hospitals테이블에 있는 번호 중 safenum이 존재하는 병원의 tel 저장
------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+
 초기 값 설정이 끝난 후
 
 const hospitalNum = // HospitalNum 입력 (배열)
@@ -38,6 +39,7 @@ hospitalNum.forEach(element => {
       const updateHospitalSafeNumberSQL = `update Hospitals set safenum = 0508-3184-${num03} where tel = element`
 
       numArray[assignIndex] = true
+      HospitalNum.push(element)
     } catch (err) {
       console.log('만개의 번호가 모두 할당되었습니다.')
     }
